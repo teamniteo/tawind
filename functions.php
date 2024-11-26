@@ -61,14 +61,43 @@ namespace Niteo\Tailwind {
 
     // Inject inline Tailwind for Site Editor
     add_action('enqueue_block_assets', function () {
-        if (is_admin()) {
-            wp_enqueue_script(
-                'tailwind',
-                wp_upload_dir()['baseurl'] . '/tailwind.js',
-                [],
-                filemtime(wp_upload_dir()['basedir'] . '/tailwind.js')
-            );
+
+        wp_enqueue_script(
+            'tailwind',
+            wp_upload_dir()['baseurl'] . '/tailwind.js',
+            array('wp-blocks', 'wp-dom-ready', 'wp-edit-post'),
+            filemtime(wp_upload_dir()['basedir'] . '/tailwind.js')
+        );
+        // Add inline script
+        wp_add_inline_script(
+            'tailwind',
+            "wp.domReady(() => {
+    // Wait for the editor iframe to load
+    const observer = new MutationObserver(() => {
+        const iframe = document.querySelector('iframe[name=\"editor-canvas\"]');
+
+        if (iframe && iframe.contentDocument) {
+            const iframeDoc = iframe.contentDocument;
+            const canvas = iframeDoc.querySelector('body');
+            if (
+                canvas &&
+                canvas.classList.length > 1 && // Has more than one class
+                !canvas.classList.contains('prose') && // Does not have 'prose'
+                canvas.classList.contains('wp-embed-responsive') // Contains 'wp-embed-responsive'
+            ) {
+                // Add a custom class to the canvas
+                canvas.classList.add('prose');
+
+                // Stop observing since the element has been found
+                observer.disconnect();
+            }
         }
+    });
+
+    // Start observing the DOM for iframe changes
+    observer.observe(document.body, { childList: true, subtree: true });
+});");
+
     });
     add_filter('wp_script_attributes', function ($attributes) {
         if (isset($attributes['id']) && $attributes['id'] === 'tailwind-js') {
@@ -85,12 +114,4 @@ namespace Niteo\Tailwind {
         return $data;
     }, 10, 2);
 
-    add_action('enqueue_block_editor_assets', function () {
-        wp_enqueue_script(
-            'tawind-plugin',
-            get_theme_file_uri('fse/build/main.js'),
-            array('react-jsx-runtime', 'wp-editor', 'wp-plugins', 'wp-primitives'),
-            1
-        );
-    });
 };
