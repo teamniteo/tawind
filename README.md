@@ -1,3 +1,7 @@
+## We're hiring!
+
+At Niteo we regularly contribute back to the Open Source community. If you do too, we'd like to invite you to [join our team](https://niteo.co/careers)!
+
 # Tawind - A Hybrid WordPress Theme for Speed and Flexibility
 
 Tawind is a hybrid WordPress theme that bridges the gap between traditional theme development and headless performance optimization. It allows you to fully utilize WordPress’s user-friendly interface, including live editing within the theme’s canvas, while delivering headless-like speed and performance.
@@ -22,3 +26,4 @@ With Tawind, you get the flexibility of a standard WordPress theme, powered by T
 1. Download repository as zip.
 2. Upload the theme to your WordPress installation and activate it in the WordPress dashboard.
 3. Activate the theme:
+
