@@ -22,3 +22,7 @@ With Tawind, you get the flexibility of a standard WordPress theme, powered by T
 1. Download repository as zip.
 2. Upload the theme to your WordPress installation and activate it in the WordPress dashboard.
 3. Activate the theme:
+
+## We're hiring!
+
+At Niteo we regularly contribute back to the Open Source community. If you do too, we'd like to invite you to [join our team](https://niteo.co/careers)!
